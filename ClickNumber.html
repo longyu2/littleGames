@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			body{
+				text-align: center;
+				background: gray;
+			}
+				table{
+					width: 250px;
+					height:240px;
+					margin: auto;
+					
+				}
+				table td{
+					width: 50px;
+					height: 40px;
+					border: 1px solid black;
+				}
+		</style>
+	</head>
+	<body>
+		<table >
+			<tr><th colspan="5">按序点数字</th></tr>
+			<tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+			<tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+			<tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+			<tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+			<tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+		</table>
+		<p>计时：<span>0</span></p>
+		<script type="text/javascript">
+			var tds=document.getElementsByTagName("td")
+			var a=1
+			var x=1
+			var arr=[]
+			var time=0
+			var sp=document.getElementsByTagName("span")[0]
+			var span=setInterval(function  () {
+				
+				
+				time=sp.innerText
+				time++
+				sp.innerText=time
+				
+			},1000)
+			
+			for(var i=0;i<tds.length;i++){
+
+				while(arr.indexOf(a)!==-1){
+					a=Math.floor(Math.random()*(25)+1)
+
+
+				}
+				tds[i].innerText=a
+				arr.push(a)
+			
+			}
+			
+			for(var i=0;i<tds.length;i++){
+				tds[i].onclick=function  () {
+					if(this.innerText==x){
+						this.style.background="red"
+						x++
+						if(x==25){
+							setTimeout(function  () {
+								var con=confirm("恭喜你胜利，用时"+time+"秒，点确认重新开始，点取消不重开")
+							if(con){
+								location.reload()
+							}else{
+                                clearInterval(span)
+								for(var i=0;i<tds.length;i++){
+									tds[i].onclick=null
+								}
+							}
+							},100)
+							
+						}
+						
+					}else{
+						alert("点错了")
+					}
+					
+				}
+			}
+			
+			
+		</script>
+	</body>
+</html>

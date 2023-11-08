@@ -1,0 +1,48 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+table{
+	margin: 0px auto ;
+	background: black;
+	padding: 0px;
+	width: 99vw;
+	height: 100vw;
+	border-collapse: separate;
+	border-spacing: 2px 2px;
+	border-collapse: collapse;
+	font-size: 0px;
+}
+table>tr{
+	border: 0px;
+	padding: 0px;
+}
+table td{
+	margin: 0px;
+	border: 0.2px #333 solid;
+	width: auto;
+	background:black;
+}
+
+
+
+.menu{
+background-color: cadetblue;	width: 100%;
+	height: 5vgh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.button{
+	border:0.5px solid #909090;
+	background-color: gainsboro;
+	padding: 20px;
+	margin: 10px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+}
+.button:hover{
+	background-color: antiquewhite;
+}
