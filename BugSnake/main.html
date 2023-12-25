@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,56 +8,60 @@
     <title>Document</title>
     <link rel="stylesheet" href="css/main.css">
 </head>
+
 <body>
-    <div id = main>
-        
-       
+    <div id=main>
+
+
         <table></table>
-        <div class="ctrl">
+        <div class="control-box">
 
-        <p><button class="mapSize">设定地图大小</button></p>
-        <p>
-            <select name="模式选择" id="changeGameMode">
-            <option value="0">标准模式</option>
-            <option value="1">穿墙模式</option>
-            <option value="2">无敌模式</option>
-            </select>
-        </p>
-          <p><button class="go">开始游戏</button></p>
-          <p>
+            <nav>
+                <p><button class="mapSize">设定地图大小</button></p>
+            </nav>
+            <nav>
+                <select name="模式选择" id="changeGameMode">
+                    <option value="0">标准模式</option>
+                    <option value="1">穿墙模式</option>
+                    <option value="2">无敌模式</option>
+                </select>
+            </nav>
+            <nav>
+                <button class="go">开始游戏</button>
+            </nav>
 
-            <span id="gametime">
-				<span>计时</span>
-				<span id="gametimeF">
-					00
-				</span>:
-				<span id="gametimeM">
-					00
-				</span>
-				
-			</span>
-          </p>
-          <p>
+            <nav>
+                <span id="gametime">
+                    <span>计时</span>
+                    <span id="gametimeF">
+                        00
+                    </span>:
+                    <span id="gametimeM">
+                        00
+                    </span>
 
-            
-			<span id="scorebox">
-				得分：
-			<span id="score">
-				
-			</span>	
-			</span>
-          </p>
-            
-            
-            <p><div class="ctrl-bot"></div></p>
-            
-			
-			
-        </div>  
+                </span>
+            </nav>
+
+            <nav>
+                <span id="scorebox">
+                    得分：
+                    <span id="score">
+
+                    </span>
+                </span>
+            </nav>
+
+
+
+
+
+        </div>
     </div>
-    
 
-    <script src="js/jquery-1.4.1.min.js" ></script>
+
+    <script src="js/jquery-1.4.1.min.js"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>

@@ -59,8 +59,22 @@ $(function(){
         randSnakeHeadi = Math.floor(Math.random()*15)
         randSnakeHeadj = Math.floor(Math.random()*15)
 
+
+        
+        
+        // 修复一个无限加载卡死的bug,
+        // 这段代码会循环执行10000次以上，直接导致浏览器卡死
+        // 已查明bug 原因：计算蛇头和食物间的距离时，没有使用绝对值，而是直接相减，以至于出现负数,
+        // 真是粗心大意!解决方式，计算距离加上绝对值即可!
+        //这是旧版代码：
+        //   while(randSnakeHeadi - foodi < 5 && randSnakeHeadj - foodj < 5){
+        //     randSnakeHeadi = Math.floor(Math.random()*15)
+        //     randSnakeHeadj = Math.floor(Math.random()*15)
+        // }
+
+        // 这是修复后的
         //确保蛇不会生成在食物附近
-        while(randSnakeHeadi - foodi < 5 && randSnakeHeadj - foodj < 5){
+        while(Math.abs(randSnakeHeadi - foodi) < 5 &&Math.abs( randSnakeHeadj - foodj )< 5){
             randSnakeHeadi = Math.floor(Math.random()*15)
             randSnakeHeadj = Math.floor(Math.random()*15)
         }
@@ -86,7 +100,7 @@ $(function(){
     
    //食物生成函数
    function foodAdd(){
-
+        
        map[foodi][foodj] = 0   //清除旧果子
 
        //果子不能生成在蛇体内，遍历一遍蛇，如果果子与蛇坐标重合就重新生成
