@@ -1,7 +1,7 @@
 $(function () {
   const map = new Array(); //生成地图数组,  9是食物
   let direction = 0; //方向变量，右开始，逆时针
-
+  let delay = 400; // 蛇的速度，数值越低蛇运动越快
   let food = {
     //食物
     x: 0,
@@ -68,8 +68,12 @@ $(function () {
 
     //确保蛇不会生成在食物附近
     while (
-      Math.abs(snake.array[0].y - food.y) < 5 &&
-      Math.abs(snake.array[0].x - food.x) < 5
+      (Math.abs(snake.array[0].y - food.y) < 5 &&
+        Math.abs(snake.array[0].x - food.x) < 5) ||
+      snake.array[0].y < 3 ||
+      snake.array[0].x < 3 ||
+      snake.array[0].y > 16 ||
+      snake.array[0].x > 16
     ) {
       snake.array[0].y = Math.floor(Math.random() * 15);
       snake.array[0].x = Math.floor(Math.random() * 15);
@@ -90,12 +94,21 @@ $(function () {
     // 随机生成果子
     food.y = Math.floor(Math.random() * 18 + 1);
     food.x = Math.floor(Math.random() * 18 + 1);
-
     for (let i = 0; i < snake.array.length; i++) {
       if (food.y == snake.array[i].y && food.x == snake.array[i].x) {
-        foodAdd(); //如果发现
+        foodAdd(); //发现生成的果子在蛇体内则重新生成
       }
     }
+
+     // 每获得5分增加难度
+     if ((snake.array.length) % 4 === 0 && delay > 170) {
+        console.log(snake.array.length)
+        
+      delay -= 50;      // 蛇的长度达到4的倍数增加速度
+      clearInterval(time);
+      initTime();
+    }
+
   }
 
   //蛇身移动函数
@@ -133,8 +146,11 @@ $(function () {
 
       snake.array[0] = snakeHeadCopy; // 将头指向调整好的头的复制
 
-      //调用方法渲染页面
+
     }
+
+   
+
 
     Render(); // 将数据渲染成视图
   }
@@ -234,7 +250,8 @@ $(function () {
         $("#gametimeF").text(Math.floor(GAMETIME / 2 / 60));
       }
     }
-    $("#score").text(snake.array.length - 3);
+
+    $("#score").text(snake.array.length - 3); // 超级暴力计算分数
 
     $("td").css("background", "white");
 
@@ -314,22 +331,27 @@ $(function () {
   //调整地图大小
   $(".mapSize").click(function () {});
 
+
+
   //开始或停止事件
   function GoAndStop() {
+    
     if (!IsbtnGo) {
-      IsbtnGo = !IsbtnGo;
       $(".go").text("暂停");
-      time = setInterval(function () {
-        move();
-        GAMETIME++;
-      }, 500);
+      initTime();
     } else {
-      IsbtnGo = !IsbtnGo;
-
       $(".go").text("开始游戏");
       clearInterval(time);
     }
+    IsbtnGo = !IsbtnGo;
   }
+
+  const initTime = () => {
+    time = setInterval(function () {
+      move();
+      GAMETIME++;
+    }, delay);
+  };
 
   //开始游戏按钮
   $(".go").click(function () {
