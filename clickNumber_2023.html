@@ -36,7 +36,6 @@
         font-weight: 600;
         color: #ddd;
       }
- 
     </style>
   </head>
   <body>
@@ -93,8 +92,8 @@
       function loading() {
         index = 1;
         arr = [];
-        timeObj.innerText = 0
-        clearInterval(time)
+        timeObj.innerText = 0;
+        clearInterval(time);
         // 初始化地图
         while (true) {
           let rand = Math.floor(Math.random() * 25 + 1);
@@ -118,25 +117,29 @@
       }
 
       // 添加交互逻辑
-      function ClickNumber() {
+      async function ClickNumber() {
         let i = parseInt(this.innerText);
         if (i == index) {
           this.style.background = "orange";
+
           index++;
         } else {
           alert("你点错了");
         }
-        if (index == 26) {
-          if (
-            confirm(
-              `游戏结束!你的成绩是：${timeObj.innerText}秒，点击确认重新开始游戏，点击取消不重新开始`
-            )
-          ) {
-            loading();
-          } else {
-            clearInterval(time)
+
+        setTimeout(() => {
+          if (index == 26) {
+            if (
+              confirm(
+                `游戏结束!你的成绩是：${timeObj.innerText}秒，点击确认重新开始游戏，点击取消不重新开始`
+              )
+            ) {
+              loading();
+            } else {
+              clearInterval(time);
+            }
           }
-        }
+        }, 100);
       }
 
       loading();
