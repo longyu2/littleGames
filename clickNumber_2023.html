@@ -1,46 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>按序点数字2023重置版</title>
 
-    <style>
-      body {
-        background-color: cadetblue;
-        color: #ddd;
-      }
-      #app {
-        box-sizing: border-box;
-        width: 100%;
-        height: 100%;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>按序点数字2023重置版</title>
+
+  <style>
+    body {
+      background-color: cadetblue;
+      color: #ddd;
+    }
+
+    #app {
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      padding-top: 15vh;
+
+      .table-container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding-top: 15vh;
       }
-      #table {
-        margin-top: 5vh;
-        border: 0;
-        border-right: 1px solid #ddd;
-        border-bottom: 1px solid #ddd;
-      }
-      td {
-        border-top: 1px solid #ddd;
-        border-left: 1px solid #ddd;
-        width: 80px;
-        height: 50px;
-        line-height: 50px;
-        text-align: center;
-        font-size: large;
-        font-weight: 600;
-        color: #ddd;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="app">
-      <div><span id="time">1</span>s</div>
+    }
+
+    #table {
+      margin-top: 5vh;
+      border: 0;
+      border-right: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+    }
+
+    ul {
+      width: 300px;
+      list-style: none;
+    }
+
+    td {
+      border-top: 1px solid #ddd;
+      border-left: 1px solid #ddd;
+      width: 80px;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      font-size: large;
+      font-weight: 600;
+      color: #ddd;
+    }
+
+    span {
+      font-size: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="table-container">
+      <span>计时：<span id="time">1</span>s</span>
 
       <table id="table" cellspacing="0" cellpanding="0">
         <tr>
@@ -81,68 +102,77 @@
       </table>
     </div>
 
-    <script>
-      const table = document.querySelector("#table");
-      let tds = document.querySelectorAll("td");
-      let timeObj = document.querySelector("#time");
 
-      let arr;
-      let index;
-      let time;
-      function loading() {
-        index = 1;
-        arr = [];
-        timeObj.innerText = 0;
+    <ul>
+      <li></li>
+    </ul>
+  </div>
+
+  <script>
+    const table = document.querySelector("#table");
+    let tds = document.querySelectorAll("td");
+    let clock = document.querySelector("#time");
+
+    let arr;
+    let index;
+    let time;
+    function loading() {
+      index = 1;
+      arr = [];
+      clock.innerText = 0;
+      // 初始化地图
+      while (true) {
+        let rand = Math.floor(Math.random() * 25 + 1);
+        if (arr.indexOf(rand) == -1) {
+          arr.push(rand);
+        }
+        if (arr.length == 25) {
+          break;
+        }
+      }
+      for (let i = 0; i < arr.length; i++) {
+        tds[i].innerText = arr[i];
+        tds[i].style.background = null;
+        tds[i].onclick = ClickNumber;
+      }
+
+      // 启动定时器
+      time = setInterval(() => {
+        clock.innerText = (parseInt(clock.innerText) + 1).toString();
+      }, 1000);
+    }
+
+    // 添加交互逻辑
+    async function ClickNumber() {
+      let i = parseInt(this.innerText);
+      if (i == index) {
+        this.style.background = "orange";
+
+        index++;
+      } else {
+        alert("你点错了");
+      }
+
+
+      if (index == 3) {
+        if (
+          confirm(
+            `游戏结束!你的成绩是：${clock.innerText}秒，点击确认重新开始游戏，点击取消不重新开始`
+          )
+        ) {
+
+          loading();
+        }
         clearInterval(time);
-        // 初始化地图
-        while (true) {
-          let rand = Math.floor(Math.random() * 25 + 1);
-          if (arr.indexOf(rand) == -1) {
-            arr.push(rand);
-          }
-          if (arr.length == 25) {
-            break;
-          }
-        }
-        for (let i = 0; i < arr.length; i++) {
-          tds[i].innerText = arr[i];
-          tds[i].style.background = null;
-          tds[i].onclick = ClickNumber;
-        }
+        // 记录成绩
 
-        // 启动定时器
-        time = setInterval(() => {
-          timeObj.innerText = (parseInt(timeObj.innerText) + 1).toString();
-        }, 1000);
+        document.querySelector("ul").innerHTML += (`<li>成绩： ${clock.innerText} s</li>`)
       }
 
-      // 添加交互逻辑
-      async function ClickNumber() {
-        let i = parseInt(this.innerText);
-        if (i == index) {
-          this.style.background = "orange";
+    }
 
-          index++;
-        } else {
-          alert("你点错了");
-        }
+    loading();
+  </script>
+</body>
 
-        setTimeout(() => {
-          if (index == 26) {
-            if (
-              confirm(
-                `游戏结束!你的成绩是：${timeObj.innerText}秒，点击确认重新开始游戏，点击取消不重新开始`
-              )
-            ) {
-              loading();
-            } else {
-              clearInterval(time);
-            }
-          }
-        }, 100);
-      }
-
-      loading();
-    </script>
-  </body>
 </html>
